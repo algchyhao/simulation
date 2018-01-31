@@ -1,0 +1,18 @@
+% the data needed
+%__________________
+% x0 = t0_for_draw
+% funct_a = time_a
+% funct_b = rain0 
+%__________________
+% x0 AND funct_a, funct_b must be the same dimension.
+%__________________
+[AX,H1,H2]=plotyy(x0,funct_a,x0,funct_b,'plot','bar');%draw duel-axis, AX(1)at the lext AX(2) at the right,H is the curve(and bar).
+    
+    set(AX(1),'Xlim',[0,max(x0)],'Ylim',[0,max(funct_a)*2],'YTick',[0:0.05:max(funct_a)*2],'FontSize',12); % set the range of x-axis, AX(1) AND the resolution of AX(1), last, fontsize 
+    set(AX(2),'YDir','reverse','YLim',[min(funct_b),2.0*max(funct_b)],'YTick',[min(rain0):1:2.0*max(rain0)],'Fontsize',12,'YColor','k');
+   
+    set(H1,'Color','b'); % color of curve 1
+    set(H2,'FaceAlpha',0.8); %set the bar to be semi-transparency
+    set(get(AX(1),'Xlabel'),'String','x-axis /hour');
+    set(get(AX(1),'Ylabel'),'String',{'function a','unit'});
+    set(get(AX(2),'Ylabel'),'string','function b /unit');
