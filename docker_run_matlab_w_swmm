@@ -1,0 +1,41 @@
+FROM ubuntu
+MAINTAINER CYHAO (NTU & SEC)
+
+RUN apt-get -qq update && apt-get -qq install -y \
+	unzip\
+	wget\
+	xorg\
+	curl\
+	gcc\
+	apt-utils\
+	make &&\
+	mkdir /mcr_install &&\
+	mkdir /usr/local/mcr &&\
+	mkdir /usr/local/swmm &&\
+	mkdir /workfolder 
+ADD MCR_R2017a_glnxa64_installer.zip /mcr_install 
+RUN cd /mcr_install &&\
+	unzip -q MCR_R2017a_glnxa64_installer.zip &&\
+	./install -destinationFolder /usr/local/mcr -mode silent -agreeToLicense yes &&\
+	mv /usr/local/mcr/v92/* /usr/local/mcr/ &&\
+	cd /&&\
+	rm -r mcr_install
+ADD swmm51012_engine_2_modified.zip /usr/local/swmm
+RUN cd /usr/local/swmm &&\
+	unzip -q swmm51012_engine_2_modified.zip &&\
+	make &&\
+	cd / 
+ADD testcode.zip /workfolder
+ADD model.zip /workfolder
+RUN cd /workfolder &&\
+	unzip -q testcode.zip &&\
+	cd testcode &&\
+	chmod 757 testcode &&\
+	chmod 757 run_testcode.sh &&\
+	./run_testcode.sh /usr/local/mcr &&\
+	cd /workfolder &&\
+	unzip -q model.zip &&\
+	cd /workfolder/model
+
+
+
