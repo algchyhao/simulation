@@ -1,2 +1,2 @@
 # simulation
-efficient_sampling
+some notes
